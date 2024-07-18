@@ -1,0 +1,162 @@
+#include <stdio.h>
+#include <string.h>
+#define MAX_PATIENTS 100
+#define MAX_APPOINTMENTS 100
+#define MAX_PRESCRIPTIONS 100
+
+struct Patient 
+{
+    int id;
+    char name[50];
+    int age;
+};
+
+struct Appointment
+ {
+    int patientId;
+    char date[20];
+};
+
+struct Prescription
+ {
+    int patientId;
+    char medication[50];
+    char dosage[20];
+};
+
+struct Patient patients[MAX_PATIENTS];
+struct Appointment appointments[MAX_APPOINTMENTS];
+struct Prescription prescriptions[MAX_PRESCRIPTIONS];
+int patientCount = 0;
+int appointmentCount = 0;
+int prescriptionCount = 0;
+
+void addPatient();
+void addAppointment();
+void addPrescription();
+void viewPatients();
+void viewAppointments();
+void viewPrescriptions();
+
+int gmain() 
+{
+    int choice;
+    
+    while (1)
+     {
+        printf("\nClinic Management System\n");
+        printf("1. Add Patient\n");
+        printf("2. Add Appointment\n");
+        printf("3. Add Prescription\n");
+        printf("4. View Patients\n");
+        printf("5. View Appointments\n");
+        printf("6. View Prescriptions\n");
+        printf("7. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+        
+        switch (choice) 
+        {
+            case 1: addPatient(); break;
+            case 2: addAppointment(); break;
+            case 3: addPrescription(); break;
+            case 4: viewPatients(); break;
+            case 5: viewAppointments(); break;
+            case 6: viewPrescriptions(); break;
+            case 7: return 0;
+            default: printf("Invalid choice. Try again.\n");
+        }
+    }
+}
+
+void addPatient()
+ {
+    if (patientCount < MAX_PATIENTS)
+{
+        struct Patient newPatient;
+        newPatient.id = patientCount + 1;
+        
+        printf("Enter patient name: ");
+        scanf("%s", newPatient.name);
+        printf("Enter patient age: ");
+        scanf("%d", &newPatient.age);
+        
+        patients[patientCount++] = newPatient;
+        printf("Patient added successfully.\n");
+    } 
+    else
+     {
+        printf("Maximum patients reached.\n");
+    }
+}
+
+void addAppointment()
+ {
+    if (appointmentCount < MAX_APPOINTMENTS)
+     {
+        struct Appointment newAppointment;
+        
+        printf("Enter patient ID: ");
+        scanf("%d", &newAppointment.patientId);
+        printf("Enter appointment date: ");
+        scanf("%s", newAppointment.date);
+        
+        appointments[appointmentCount++] = newAppointment;
+        printf("Appointment added successfully.\n");
+    } 
+    else
+     {
+        printf("Maximum appointments reached.\n");
+    }
+}
+
+void addPrescription()
+ {
+    if (prescriptionCount < MAX_PRESCRIPTIONS)
+     {
+        struct Prescription newPrescription;
+        
+        printf("Enter patient ID: ");
+        scanf("%d", &newPrescription.patientId);
+        printf("Enter medication: ");
+        scanf("%s", newPrescription.medication);
+        printf("Enter dosage: ");
+        scanf("%s", newPrescription.dosage);
+        
+        prescriptions[prescriptionCount++] = newPrescription;
+        printf("Prescription added successfully.\n");
+    } 
+    else
+     {
+        printf("Maximum prescriptions reached.\n");
+    }
+}
+
+void viewPatients() {
+    printf("\nPatient List:\n");
+    printf("ID\tName\tAge\n");
+    for (int i = 0; i < patientCount; i++) 
+{
+        printf("%d\t%s\t%d\n", patients[i].id, patients[i].name, patients[i].age);
+    }
+}
+
+void viewAppointments() {
+    printf("\nAppointment List:\n");
+    printf("Patient ID\tDate\n");
+    for (int i = 0; i < appointmentCount; i++) {
+        printf("%d\t\t%s\n", appointments[i].patientId, appointments[i].date);
+    }
+}
+
+void viewPrescriptions()
+{
+    printf("\nPrescription List:\n");
+    printf("Patient ID\tMedication\tDosage\n");
+    for (int i = 0; i < prescriptionCount; i++) 
+{
+        printf("%d\t\t%s\t\t%s\n", prescriptions[i].patientId, prescriptions[i].medication, prescriptions[i].dosage);
+    }
+}
+
+
